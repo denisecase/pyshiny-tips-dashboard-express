@@ -1,2 +1,12 @@
+htmltools
+faicons
+numpy
+pandas
+plotly
+plotnine
 ridgeplot
-pyshiny
+scikit-learn
+seaborn
+shiny
+shinylive
+shinywidgets
