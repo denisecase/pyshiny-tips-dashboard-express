@@ -1,13 +1,14 @@
 import faicons as fa
-import pandas as pd # github pages
-import statsmodels.api as sm # github pages
-from ridgeplot import ridgeplot
-
+import pandas as pd # required for plotly.express
 import plotly.express as px
 from shinywidgets import render_plotly
 
 from shiny import reactive, render, req
 from shiny.express import input, ui
+
+# Plotly's px.scatter function uses statsmodels for lowess trendlines under the hood.
+# import statsmodels.api as sm # required for total bill vs tip plotly.express charts
+
 
 # Load data and compute static values
 tips = px.data.tips()
@@ -82,7 +83,7 @@ with ui.layout_columns(col_widths=[6, 6, 12]):
                 x="total_bill",
                 y="tip",
                 color=None if color == "none" else color,
-                trendline="lowess"
+                # trendline="lowess"
             )
 
     with ui.card(full_screen=True):
@@ -102,23 +103,44 @@ with ui.layout_columns(col_widths=[6, 6, 12]):
             dat = tips_data()
             dat["percent"] = dat.tip / dat.total_bill
             yvar = input.tip_perc_y()
-            uvals = dat[yvar].unique()
+         
+            # uvals = dat[yvar].unique()
 
-            samples = [
-                [ dat.percent[dat[yvar] == val] ]
-                for val in uvals
-            ]
+            # samples = [
+            #     [ dat.percent[dat[yvar] == val] ]
+            #     for val in uvals
+            # ]
 
-            plt = ridgeplot(
-                samples=samples, labels=uvals, bandwidth=0.01,
-                colorscale="viridis", colormode="row-index"
+            # plt = ridgeplot(
+            #     from ridgeplot import ridgeplot
+            #     samples=samples, labels=uvals, bandwidth=0.01,
+            #     colorscale="viridis", colormode="row-index"
+            # )
+
+            # plt.update_layout(
+            #     legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5)
+            # )
+
+            # return plt
+        
+            # Create a violin plot with Plotly
+            fig = px.violin(
+                dat,
+                y="percent",
+                color=yvar,  # This will split the violin plot by the selected variable
+                box=True,  # Displays a box plot inside the violin
+                points="all",  # Shows all points
+                hover_data=tips.columns,  # Adds all other data as hover information
+                title="Distribution of Tip Percentages by " + yvar.capitalize()
             )
-
-            plt.update_layout(
-                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5)
+    
+            # Update layout for better readability
+            fig.update_layout(
+                yaxis_title="Tip Percentage",
+                legend_title=yvar.capitalize(),
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
             )
-
-            return plt
+            return fig
 
 
 # --------------------------------------------------------

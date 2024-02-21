@@ -13,4 +13,3 @@ shiny
 shinylive
 shinywidgets
 statsmodels
-
