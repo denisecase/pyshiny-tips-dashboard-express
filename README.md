@@ -1,7 +1,7 @@
 # PyShiny Express: Tips Dashboard
 
 - Repository: [pyshiny-tips-dashboard-express](https://github.com/denisecase/pyshiny-tips-dashboard-express)
-- Live App: [Tips Dashboard (Express)]()
+- Live App: [Tips Dashboard (Express)](https://denisecase.github.io/pyshiny-tips-dashboard-express/)
 
 Run and publish interactive apps using PyShiny Express and GitHub Pages.
 
@@ -78,16 +78,19 @@ py -m pip install --upgrade -r requirements.txt
 With your project virtual environment activated in the terminal and the necessary packages installed, run the app with live reloading and automatically open it in the browser:
 
 ```shell  
-shiny run --reload --launch-browser app.py
+shiny run --reload --launch-browser tips/app.py
 ```
+
+While the app is running, that terminal is fully occupied.
+Open a new terminal to run other commands.
 
 ## Build the App
 
-With your project virtual environment activated in the terminal and the necessary packages installed, remove any existing assets and use shinylive export to build the app in the current folder (.) to the docs folder:
+With your project virtual environment activated in the terminal and the necessary packages installed, remove any existing assets and use shinylive export to build the app in tips folder to the docs folder:
 
 ```shell
 shiny static-assets remove
-shinylive export . docs
+shinylive export tips docs
 ```
 
 ## Publish the App with GitHub Pages
@@ -104,5 +107,3 @@ git push -u origin main
 3. Scroll down to the GitHub Pages section and select the main branch as the source for the site.
 4. Publish from the docs folder.
 5. Click Save and wait for the site to build.
-
-
