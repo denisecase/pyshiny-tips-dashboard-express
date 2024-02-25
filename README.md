@@ -5,6 +5,9 @@
 
 Run and publish interactive apps using PyShiny Express and GitHub Pages.
 
+This is a teaching version of the app written for clarity and understanding.
+To contribute, please fork the repository and submit a pull request.
+
 ## Data Description
 
 This app uses the Seaborn library to import the tips dataset. The dataset contains 244 records and 7 fields. The fields are:
@@ -38,23 +41,32 @@ Before you start, have the following installed:
 - **Python**: Install the most recent version from [python.org](https://www.python.org/downloads/).
 - **Git**: Download and install Git from [git-scm.com](https://git-scm.com/downloads).
 - **Visual Studio Code (VS Code)**: Download from [code.visualstudio.com](https://code.visualstudio.com/).
-- **VS Code Extensions**: Install the Python extension for VS Code.
+- **VS Code Extensions**: Install the Python extension and the Shiny extension in VS Code.
 
 ### Configurations
 
-- **Configure Git**: Set up your user name and email with Git using the following commands in your terminal:
+- **Configure Git**: Set up your user name and email with Git using the following commands in your terminal.
+Change the values to your name and email address. This is a one-time setup.
 
   ```shell
   git config --global user.name "Your Name"
   git config --global user.email "youremail@example.com"
+  ```
 
 ## Set up the Project
+
+### Commands
+
+Commands are operating system-specific.
+These commands are for Windows users.
+On Mac/Linux, generally use `python3` instead of `py`.
+Edit your README.md to reflect the commands that work on your machine.
 
 ### Verify Installations
 
 1. Open project folder in VS Code.
 2. Open a new terminal (on Windows, ensure the terminal type is PowerShell (not the old cmd)
-3. Run the following commands in the terminal one at a time::
+3. Run the following commands in the terminal one at a time to verify installations.
 
 ```shell
 py --version
@@ -74,14 +86,19 @@ Use PowerShell on Windows or the terminal on macOS and Linux.
 Create a project virtual environment in the .venv folder of the project root directory.
 
   ```shell
-  py -m venv .venv`
+  py -m venv .venv
   ```
+
+Creating a project virtual environment is generally a one-time setup.
+Once the folder exists, we can activate it to work on the project.
+
+If VS Code pops up and says: We noticed a new environment has been created.
+Do you want to select it for the workspace folder? select Yes.
 
 ### Activate the Project Virtual Environment (when you work on the project)
 
 Once the project virtual environment exists,
  we activate the virtual environment to work on the project - or when we open a new terminal.
-We can verify our environment is active when (.venv) appears in the terminal prompt.
 
 On Windows:
 
@@ -95,12 +112,17 @@ On macOS and Linux:
   source .venv/bin/activate
   ```
 
-We also need to select this project virtual environment in VS Code.
-To do this, open the command palette (Ctrl+Shift+P) and search for "Python: Select Interpreter". Then, select the .venv folder in the project root directory.
+Verify: Generally when the environment is active, (.venv) will appear in the terminal prompt.
+
+We also need to select this project virtual environment in VS Code. To do this:
+
+1. Open the VS Code command palette (Ctrl+Shift+P).
+2. Search for "Python: Select Interpreter".
+3. Select the .venv folder in the project root directory.
 
 ### Install Packages into the Active Project Virtual Environment
 
-When the project virtual environment is active,
+When the project virtual environment is **active**,
 install packages into the project virtual environment so they are available for use in the Python code.
 
 NOTE:
@@ -108,17 +130,21 @@ NOTE:
 - We **install** packages into the project virtual environment.
 - We **import** packages into Python code (after they have been installed).
 
-First, upgrade pip and wheel for good measure.
-Then, install the project-specific required packages:
+First, upgrade pip and setuptools (core packages) for good measure.
+Then, install the project-specific required packages.
+
+With the project virtual environment **active** in the terminal, run the following commands:
 
 ```shell
-py -m pip install --upgrade pip wheel
+py -m pip install --upgrade pip setuptools
 py -m pip install --upgrade -r requirements.txt
 ```
 
+Installing packages is generally a one-time setup.
+
 ## Run the App
 
-With your project virtual environment activated in the terminal
+With your project virtual environment **active** in the terminal
  and the necessary packages installed, run the app with live reloading and
  automatically open it in the browser:
 
@@ -129,25 +155,36 @@ shiny run --reload --launch-browser tips/app.py
 While the app is running, that terminal is fully occupied.
 Open a new terminal to run other commands.
 
+When the app is running, open a browser and navigate to <http://127.0.0.1:8000/> to view the app.
+
+**Please Be Patient**: The app may take a few seconds to start. The charts may take an additional few seconds to render.
+
 ## Build the App to Docs Folder and Test Locally
 
-With your project virtual environment activated in the terminal
+With your project virtual environment **active** in the terminal
  and the necessary packages installed, remove any existing assets and use
- shinylive export to build the app in the tips folder to the docs folder:
+ shinylive export to build the app in the penguins folder to the docs folder:
 
 ```shell
 shiny static-assets remove
 shinylive export tips docs
 ```
 
+Optional: Edit docs/index.html to show a custom browser tab title and add a favicon.
+
+```html
+    <title>PyShiny Tips</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+```
+
 After the app is built, serve the app locally from the docs folder to test before publishing to GitHub Pages.
-In the terminal, run the following command from the root of the project folder:
+In the terminal, run the following command from the root of the project folder with the project virtual environment **active**:
 
 ```shell
 py -m http.server --directory docs --bind localhost 8008
 ```
 
-Open a browser (tested with Chrome) and navigate to [http://localhost:8008](http://localhost:8008) to view the app running locally.
+Open a browser (tested with Chrome) and navigate to <http://[::1]:8008/> to view the app running locally.
 
 ## After Editing, Git Add/Commit/Push Changes to GitHub
 
@@ -171,7 +208,7 @@ After configuring the repository once, each time you push changes to the main br
 1. Go to the repository on GitHub and navigate to the **Settings** tab.
 2. Scroll down and click the **Pages** section.
 3. Select branch **main** as the source for the site.
-4. Select the **docs** folder to publish from.
+4. Change from the root folder to the **docs** folder to publish from.
 5. Click Save and wait for the site to build.
 6. Edit the "About" section of the repository to include a link to the live app.
 
@@ -179,3 +216,18 @@ After configuring the repository once, each time you push changes to the main br
 
 Example csv data from [tips.csv](https://github.com/mwaskom/seaborn-data/blob/master/tips.csv).
 Used for review only. In the app, we import the data from the Seaborn library.
+
+The Shiny development team. Shiny for Python [Computer software]. <https://github.com/posit-dev/py-shiny>
+
+## Screenshots
+
+Running the Shiny for Python app locally on port 8000.
+The third chart is slightly different from the original - it has been tested to run successfully on GitHub Pages.
+
+![Running the Shiny for Python app locally](./images/LocalAppRunning.JPG)
+
+Serving the static app locally from the **docs** folder (as GitHub Pages will) on port 8008.
+The browser tab shows a custom tab title and favicon.
+Recommended: Build your own favicon at <https://favicon.io/>.
+
+![Serving the app locally from the docs folder](./images/ServingAppLocally.JPG)
